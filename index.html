@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Economics Practice — 60 Questions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --primary:#2b6cb0;
+      --muted:#6b7280;
+      --bg:#f3f6fb;
+      --card:#ffffff;
+      --accent:#1f9d8e;
+      --danger:#e53e3e;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      background:linear-gradient(180deg,var(--bg),#eef4fb);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    header{
+      background:linear-gradient(90deg,var(--primary),#4c7bd9);
+      color:white;
+      padding:24px;
+      text-align:left;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      box-shadow:0 6px 18px rgba(15,23,42,0.08);
+    }
+    header h1{margin:0;font-size:20px;font-weight:700}
+    header p{margin:0;font-size:13px;opacity:.95}
+    .wrap{
+      max-width:1050px;
+      margin:22px auto;
+      padding:20px;
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:20px;
+    }
+    .sidebar{
+      background:var(--card);
+      border-radius:12px;
+      padding:18px;
+      box-shadow:0 6px 18px rgba(15,23,42,0.04);
+      height:fit-content;
+      position:sticky;
+      top:24px;
+    }
+    .sidebar h3{margin:0 0 12px 0;font-size:16px}
+    .meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .meta .box{
+      background:#f8fafc;
+      border-radius:8px;
+      padding:10px;
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border:1px solid #e6eefc;
+      margin-bottom:10px;
+    }
+    .meta .box strong{font-size:18px}
+    .controls{
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+      flex-wrap:wrap;
+    }
+    button, .btn {
+      background:var(--primary);
+      color:white;
+      border:none;
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      box-shadow:0 6px 14px rgba(43,108,176,0.12);
+    }
+    .btn.secondary{
+      background:white;color:var(--primary);border:1px solid #dbeafe;font-weight:600;
+      box-shadow:none;
+    }
+    .content{
+      background:var(--card);
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 6px 18px rgba(15,23,42,0.04);
+    }
+    .question {
+      padding:14px;
+      border-radius:10px;
+      border:1px solid #eef2ff;
+      margin-bottom:12px;
+      background:linear-gradient(180deg,#ffffff,#fbfdff);
+    }
+    .q-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+    .q-head h4{margin:0;font-size:15px}
+    .options{margin-top:8px;display:grid;gap:8px}
+    label.option{
+      display:block;
+      padding:10px 12px;
+      border-radius:8px;
+      background:#fbfcfe;
+      border:1px solid #eef3ff;
+      cursor:pointer;
+      transition:all .12s ease;
+    }
+    input[type="radio"]{display:none}
+    label.option:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(2,6,23,0.04)}
+    label.option .letter{
+      display:inline-block;
+      width:28px;height:28px;border-radius:6px;background:#f1f5f9;color:#0f172a;text-align:center;line-height:28px;font-weight:700;margin-right:8px;
+    }
+    .result {
+      margin-top:14px;
+      padding:12px;
+      border-radius:8px;
+      display:none;
+    }
+    .result.correct{background:#ecfdf5;border:1px solid #bbf7d0;color:#065f46}
+    .result.wrong{background:#fff1f2;border:1px solid #fecaca;color:#7f1d1d}
+    .summary{
+      margin-top:14px;
+      padding:14px;border-radius:10px;background:#f8fafc;border:1px solid #e6eefc;
+    }
+    .recommend{
+      margin-top:12px;padding:12px;border-radius:8px;background:linear-gradient(90deg,#fff,#f7fcfb);border:1px solid #e6f6f2;
+    }
+    footer{max-width:1050px;margin:18px auto;text-align:center;color:var(--muted);font-size:13px}
+    @media(max-width:920px){
+      .wrap{grid-template-columns:1fr; padding:12px}
+      .sidebar{position:static}
+    }
+    .topbar{
+      display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px;
+    }
+    .pill{background:#eef2ff;padding:8px 10px;border-radius:999px;font-weight:600;color:var(--primary);border:1px solid #e1ecff}
+    .small{font-size:13px;color:var(--muted)}
+    .badge{background:#f1f5f9;padding:6px 10px;border-radius:999px;font-weight:600;color:#0f172a;border:1px solid #e6eefc}
+    .qcount{font-weight:700;color:var(--primary)}
+    .time{font-weight:700;color:#0f172a}
+    .progressbar{
+      height:12px;background:#eef2ff;border-radius:999px;overflow:hidden;margin-top:10px;
+    }
+    .progress{height:100%;background:linear-gradient(90deg,var(--accent),#6dd3c6);width:0%}
+    .explain{font-size:13px;color:var(--muted);margin-top:8px}
+    .unit-tag{font-size:12px;padding:6px 8px;border-radius:8px;background:#f3f4f6;border:1px solid #eaeef5}
+  </style>
+</head>
+<body>
+  <header>
+    <div style="flex:1">
+      <h1>Economics Practice — 60 Questions</h1>
+      <p style="opacity:.9">Units: Investment & Savings, Production, Sufficiency Economy, Consumer Protection, Economic Systems</p>
+    </div>
+    <div style="text-align:right">
+      <div style="font-weight:700">Ready to practice?</div>
+      <div class="small">Finish & Submit to see full report</div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <aside class="sidebar">
+      <h3>Exam Controls</h3>
+      <div class="meta">
+        <div class="box">
+          <div>
+            <div class="small">Questions</div>
+            <div class="qcount">60</div>
+          </div>
+          <div>
+            <div class="small">Units</div>
+            <div class="small">5</div>
+          </div>
+        </div>
+
+        <div class="box">
+          <div>
+            <div class="small">Time Elapsed</div>
+            <div class="time" id="timeDisplay">00:00</div>
+          </div>
+          <div>
+            <div class="small">Status</div>
+            <div class="small" id="status">Not started</div>
+          </div>
+        </div>
+
+        <div class="box">
+          <div>
+            <div class="small">Score</div>
+            <div class="qcount" id="scoreDisplay">—</div>
+          </div>
+          <div>
+            <div class="small">Correct</div>
+            <div class="small" id="correctDisplay">—</div>
+          </div>
+        </div>
+
+        <div class="progressbar" aria-hidden>
+          <div class="progress" id="progress"></div>
+        </div>
+
+        <div style="margin-top:12px" class="controls">
+          <button id="startBtn">Start Exam</button>
+          <button class="btn secondary" id="resetBtn">Reset</button>
+          <button id="submitBtn" style="background:#16a34a">Submit</button>
+        </div>
+
+        <div style="margin-top:14px">
+          <div class="small">Legend</div>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+            <div class="pill">A–D</div><div class="badge">Timed</div><div class="pill">60 Qs</div>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <main class="content" id="mainContent">
+      <div class="topbar">
+        <div class="unit-tag">Unit 1: Investment & Savings (15)</div>
+        <div class="unit-tag">Unit 2: Production (10)</div>
+        <div class="unit-tag">Unit 3: Sufficiency Economy (10)</div>
+        <div class="unit-tag">Unit 4: Consumer Protection (15)</div>
+        <div class="unit-tag">Unit 5: Economic Systems (10)</div>
+      </div>
+
+      <form id="quizForm">
+        <!-- Questions will be injected here -->
+      </form>
+
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+        <button id="submitBottom" style="background:#16a34a">Submit Answers</button>
+        <button class="btn secondary" id="showAnswers">Show Correct Answers</button>
+      </div>
+
+      <div id="report" style="display:none" class="summary">
+        <h3>Result Summary</h3>
+        <div id="reportContent"></div>
+        <div id="recommendations" class="recommend"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    Tip: After submit, read explanations for topics to revise weaker units.
+  </footer>
+
+  <script>
+    // ======= QUESTIONS DATA =======
+    // Structure: {id, unit, q, choices: {A:..., B:..., C:..., D:...}, answer: 'A', explanation: '...'}
+    const questions = [
+      // Unit 1: Investment & Savings (15)
+      {id:1, unit:1, q:"What is the formula for savings?", choices:{A:"Income + Expenditure", B:"Income - Expenditure", C:"Expenditure - Income", D:"Income × Expenditure"}, answer:"B", explanation:"Savings equals income minus expenditure."},
+      {id:2, unit:1, q:"Which is an example of long-term savings?", choices:{A:"Saving for a phone in 1 year", B:"Saving for a vacation next month", C:"Saving for a house in 10 years", D:"Buying snacks daily"}, answer:"C", explanation:"Long-term savings usually 5–20 years, e.g., buying a house."},
+      {id:3, unit:1, q:"Which of the following is an investment?", choices:{A:"Putting money under a pillow", B:"Buying shares of a company", C:"Spending on fast food", D:"Borrowing from friend"}, answer:"B", explanation:"Buying shares (stocks) is investing to earn returns."},
+      {id:4, unit:1, q:"Government bonds are:", choices:{A:"A form of saving with no return", B:"Loans to the government with interest", C:"Same as stocks", D:"Illegal securities"}, answer:"B", explanation:"When you buy government bonds you lend money to government and receive interest."},
+      {id:5, unit:1, q:"What is FOREX?", choices:{A:"Foreign exchange market", B:"A type of bond", C:"A savings account", D:"A bank loan"}, answer:"A", explanation:"FOREX is the market for trading currencies."},
+      {id:6, unit:1, q:"Commodities include which of the following?", choices:{A:"Shares and bonds", B:"Gold and oil", C:"Bank accounts", D:"Mobile apps"}, answer:"B", explanation:"Commodities are raw materials like gold, oil, agricultural products."},
+      {id:7, unit:1, q:"If income 30,000 and expenditure 25,000, savings equal:", choices:{A:"5,000", B:"-5,000", C:"30,000", D:"25,000"}, answer:"A", explanation:"Savings = income - expenditure = 5,000."},
+      {id:8, unit:1, q:"Which is higher risk generally?", choices:{A:"Government bonds", B:"Savings account", C:"Stock market", D:"Keeping cash at home"}, answer:"C", explanation:"Stocks generally have higher risk and potential return than bonds or savings accounts."},
+      {id:9, unit:1, q:"Purpose of saving for 'emergency fund' is:", choices:{A:"To buy gifts", B:"To handle unexpected costs", C:"To invest in risky assets", D:"To spend on parties"}, answer:"B", explanation:"Emergency fund is for unexpected expenses."},
+      {id:10, unit:1, q:"Which gives ownership in a company?", choices:{A:"Bond", B:"Stock", C:"Savings account", D:"Currency"}, answer:"B", explanation:"Stocks represent partial ownership of a company."},
+      {id:11, unit:1, q:"Which action increases your savings?", choices:{A:"Increase spending", B:"Decrease income", C:"Reduce expenditure", D:"Borrow more"}, answer:"C", explanation:"Reducing expenditure increases savings if income is unchanged."},
+      {id:12, unit:1, q:"A short-term saving goal example is:", choices:{A:"Retirement", B:"Child university fund in 15 years", C:"Buy a phone in 2 years", D:"Buy a house in 20 years"}, answer:"C", explanation:"Short-term = 1–5 years; buying phone fits."},
+      {id:13, unit:1, q:"Diversification in investment helps to:", choices:{A:"Increase all risk", B:"Avoid all risk", C:"Spread risk across assets", D:"Guarantee profit"}, answer:"C", explanation:"Diversification spreads risk; it doesn't guarantee profit."},
+      {id:14, unit:1, q:"Which is NOT a benefit of saving?", choices:{A:"Financial security", B:"Debt accumulation", C:"Ability to reach goals", D:"Emergency preparedness"}, answer:"B", explanation:"Debt accumulation is a negative effect, not a benefit."},
+      {id:15, unit:1, q:"If you want growth faster than saving account, consider:", choices:{A:"High-yield savings", B:"Investing in stocks", C:"Keeping cash at home", D:"Spending"}, answer:"B", explanation:"Stocks typically offer higher long-term returns than standard savings accounts."},
+
+      // Unit 2: Production of Goods and Services (10)
+      {id:16, unit:2, q:"What is production?", choices:{A:"Using money only", B:"Changing inputs into goods or services", C:"Buying goods", D:"Storing goods"}, answer:"B", explanation:"Production transforms resources into goods or services."},
+      {id:17, unit:2, q:"Which is NOT a factor of production?", choices:{A:"Land", B:"Labor", C:"Capital", D:"Advertisement"}, answer:"D", explanation:"Advertisement is not a classic factor; factors are land, labor, capital, entrepreneurship."},
+      {id:18, unit:2, q:"Services are different from goods because services:", choices:{A:"Are tangible", B:"Can be stored easily", C:"Are intangible and consumed when produced", D:"Always free"}, answer:"C", explanation:"Services are intangible and often consumed simultaneously with production."},
+      {id:19, unit:2, q:"Productivity measures:", choices:{A:"Amount produced per input", B:"Number of workers", C:"Price of goods", D:"Tax revenue"}, answer:"A", explanation:"Productivity = output per unit of input (e.g., per worker)." },
+      {id:20, unit:2, q:"Which is an example of capital (factor)?", choices:{A:"Soil", B:"Factory machinery", C:"Worker's skill", D:"Customer"}, answer:"B", explanation:"Capital includes tools, machines, buildings used in production."},
+      {id:21, unit:2, q:"Raw materials refer to:", choices:{A:"Finished products", B:"Materials used to produce goods", C:"Money in bank", D:"Sales figures"}, answer:"B", explanation:"Raw materials are inputs used to manufacture goods."},
+      {id:22, unit:2, q:"Entrepreneurship means:", choices:{A:"Owning land only", B:"Organizing production and taking risks", C:"Working as employee", D:"Banking services"}, answer:"B", explanation:"Entrepreneurs combine factors of production and take risks to run businesses."},
+      {id:23, unit:2, q:"Output is:", choices:{A:"Input cost", B:"Goods and services produced", C:"Only services", D:"Only profit"}, answer:"B", explanation:"Output = final goods and services produced."},
+      {id:24, unit:2, q:"If productivity increases, usually:", choices:{A:"More output for same input", B:"Less output overall", C:"Inputs doubled", D:"Demand disappears"}, answer:"A", explanation:"Higher productivity yields more output from the same inputs."},
+      {id:25, unit:2, q:"A factory producing shirts — the shirts are:", choices:{A:"Services", B:"Goods", C:"Land", D:"Capital"}, answer:"B", explanation:"Shirts are tangible goods."},
+
+      // Unit 3: Sufficiency Economy (10)
+      {id:26, unit:3, q:"Who introduced the Sufficiency Economy philosophy in Thailand?", choices:{A:"A foreign economist", B:"King Bhumibol Adulyadej (Rama IX)", C:"A minister", D:"A private company"}, answer:"B", explanation:"The philosophy was introduced by King Bhumibol Adulyadej (Rama IX)."},
+      {id:27, unit:3, q:"Which is NOT one of the three core principles?", choices:{A:"Moderation", B:"Reasonableness", C:"Excessive consumption", D:"Self-immunity"}, answer:"C", explanation:"Excessive consumption is opposite to the principles."},
+      {id:28, unit:3, q:"'Self-immunity' in sufficiency economy means:", choices:{A:"Avoid all risks", B:"Have protective measures to handle shocks", C:"Rely only on imports", D:"Spend all savings"}, answer:"B", explanation:"Self-immunity means building resilience to risks."},
+      {id:29, unit:3, q:"An example of moderation is:", choices:{A:"Buying luxury items frequently", B:"Spending only what is necessary", C:"Ignoring budgets", D:"Taking extreme financial risks"}, answer:"B", explanation:"Moderation is using resources appropriately, not overconsuming."},
+      {id:30, unit:3, q:"Applying sufficiency economy to farming could include:", choices:{A:"Growing only one crop and using many chemicals", B:"Diversifying crops and careful planning", C:"Selling land", D:"No planning"}, answer:"B", explanation:"Diversification and careful planning reflect sufficiency economy."},
+      {id:31, unit:3, q:"Sufficiency economy aims for:", choices:{A:"Quick wealth without risk", B:"Sustainable and balanced living", C:"Complete isolation", D:"Excessive debt"}, answer:"B", explanation:"The goal is long-term sustainability and balance."},
+      {id:32, unit:3, q:"Which action helps 'reasonableness'?", choices:{A:"Impulse buying", B:"Making decisions after research", C:"Bragging about wealth", D:"Ignoring risks"}, answer:"B", explanation:"Reasonableness is making informed, thoughtful decisions."},
+      {id:33, unit:3, q:"A family with emergency savings applies which principle?", choices:{A:"Moderation only", B:"Self-immunity", C:"No principles", D:"Reasonableness only"}, answer:"B", explanation:"Having emergency savings builds resilience (self-immunity)."},
+      {id:34, unit:3, q:"Sufficiency economy discourages:", choices:{A:"Overconsumption and reckless risk-taking", B:"Careful planning", C:"Saving", D:"Community cooperation"}, answer:"A", explanation:"It discourages overconsumption and reckless decisions."},
+      {id:35, unit:3, q:"Which best describes 'balanced way of living'?", choices:{A:"Only work, no rest", B:"Excessive spending", C:"Mix of economic, social, environmental care", D:"Ignoring community"}, answer:"C", explanation:"Balance covers economic, social, and environmental aspects."},
+
+      // Unit 4: Consumer Protection Laws (15)
+      {id:36, unit:4, q:"Consumer protection laws aim to:", choices:{A:"Protect only producers", B:"Protect consumers from harm and fraud", C:"Stop all advertising", D:"Increase prices"}, answer:"B", explanation:"They protect consumers from unsafe products and unfair practices."},
+      {id:37, unit:4, q:"A consumer's right includes:", choices:{A:"No access to information", B:"Right to information about products", C:"Forced buying", D:"Unlimited returns"}, answer:"B", explanation:"Consumers have the right to clear information about products/services."},
+      {id:38, unit:4, q:"False advertising means:", choices:{A:"Truthful marketing", B:"Exaggerated or deceptive claims", C:"Offering discounts", D:"Posting prices"}, answer:"B", explanation:"False advertising involves deceptive or untrue claims."},
+      {id:39, unit:4, q:"If a product injures a consumer, they can:", choices:{A:"Do nothing", B:"File a complaint or claim for damages", C:"Punish the seller illegally", D:"Hide the incident"}, answer:"B", explanation:"Consumers can report and claim compensation for harm."},
+      {id:40, unit:4, q:"Warranty (guarantee) means:", choices:{A:"No return allowed", B:"Promise to repair/replace within conditions", C:"Always free service", D:"A type of tax"}, answer:"B", explanation:"Warranty is a seller's promise to repair or replace within terms."},
+      {id:41, unit:4, q:"A contract is:", choices:{A:"An agreement between parties enforceable by law", B:"A casual chat", C:"Only verbal promises cannot be enforced", D:"Always unfair"}, answer:"A", explanation:"Contracts are legally enforceable agreements."},
+      {id:42, unit:4, q:"Which action is fraud?", choices:{A:"Giving full information", B:"Hiding defects and lying to sell product", C:"Offering refunds", D:"Clear labeling"}, answer:"B", explanation:"Fraud is deceptive practice such as hiding defects or lying."},
+      {id:43, unit:4, q:"If advertisement makes false claims, consumer can:", choices:{A:"Ignore", B:"File complaint with authorities", C:"Break the product", D:"Work for the advertiser"}, answer:"B", explanation:"Consumers can report false ads to consumer protection agencies."},
+      {id:44, unit:4, q:"A safe product means:", choices:{A:"Meets safety standards and won't harm users when used properly", B:"Never tested", C:"Always costly", D:"Has no label"}, answer:"A", explanation:"Safe products meet standards and are safe under intended use."},
+      {id:45, unit:4, q:"Which is an example of consumer rights?", choices:{A:"Right to choose products", B:"Right to force shop to lower price", C:"Right to break laws", D:"Right to fake reviews"}, answer:"A", explanation:"Consumers have the right to choose from available products."},
+      {id:46, unit:4, q:"Complaint handling is important because:", choices:{A:"It ignores problems", B:"It helps fix issues and protect others", C:"It always costs money", D:"It delays justice"}, answer:"B", explanation:"Handling complaints resolves issues and improves safety."},
+      {id:47, unit:4, q:"Labeling should include:", choices:{A:"No information", B:"Clear product info, ingredients, warnings", C:"Only pictures", D:"Hidden terms"}, answer:"B", explanation:"Labels should show ingredients, warnings and relevant info."},
+      {id:48, unit:4, q:"Consumer protection helps to:", choices:{A:"Increase scams", B:"Promote fair trade and safety", C:"Eliminate choices", D:"Make goods illegal"}, answer:"B", explanation:"It promotes fairness and safety for consumers."},
+
+      // Unit 5: Economic Systems (10)
+      {id:49, unit:5, q:"A Market Economy is:", choices:{A:"Prices set by government only", B:"Production and prices set by supply and demand", C:"No private property", D:"Completely planned"}, answer:"B", explanation:"Market economy relies on supply and demand to set prices."},
+      {id:50, unit:5, q:"A Planned Economy features:", choices:{A:"Private firms decide everything", B:"Government plans production and distribution", C:"Prices from market only", D:"No government at all"}, answer:"B", explanation:"Planned economy has central planning by government."},
+      {id:51, unit:5, q:"Mixed Economy means:", choices:{A:"Only market forces", B:"Only government control", C:"Combination of market and government", D:"No economy"}, answer:"C", explanation:"Mixed economy uses both market and government roles."},
+      {id:52, unit:5, q:"Supply means:", choices:{A:"Amount consumers want", B:"Amount producers are willing to sell", C:"Price only", D:"Government tax"}, answer:"B", explanation:"Supply refers to quantity producers are willing to sell at a price."},
+      {id:53, unit:5, q:"Demand means:", choices:{A:"Amount producers make", B:"Amount consumers want to buy", C:"Government orders", D:"Only imported goods"}, answer:"B", explanation:"Demand is the quantity consumers are willing and able to buy."},
+      {id:54, unit:5, q:"Price mechanism refers to:", choices:{A:"How prices are used to allocate resources via supply and demand", B:"Only government price control", C:"Tax system", D:"Bank interest rates only"}, answer:"A", explanation:"Price mechanism allocates resources based on price signals."},
+      {id:55, unit:5, q:"Monopoly means:", choices:{A:"Many firms compete", B:"Single firm dominates the market", C:"No firms", D:"Perfect competition"}, answer:"B", explanation:"Monopoly is when one firm controls the market."},
+      {id:56, unit:5, q:"Competition generally leads to:", choices:{A:"Higher prices and lower quality", B:"Lower innovation", C:"Better prices and quality for consumers", D:"Monopoly formation"}, answer:"C", explanation:"Competition encourages better prices and quality."},
+      {id:57, unit:5, q:"Government intervention is used to:", choices:{A:"Never help markets", B:"Correct market failures and protect citizens", C:"Create only monopolies", D:"Remove all regulations"}, answer:"B", explanation:"Intervention corrects failures and protects public interests."},
+      {id:58, unit:5, q:"Which system best fits Thailand historically?", choices:{A:"Pure planned economy", B:"Pure market economy", C:"Mixed economy", D:"No economy"}, answer:"C", explanation:"Thailand is a mixed economy with both private and government roles."},
+      {id:59, unit:5, q:"If supply decreases and demand stays same, price usually:", choices:{A:"Falls", B:"Rises", C:"Stays same", D:"Becomes zero"}, answer:"B", explanation:"Lower supply with same demand tends to increase price."},
+      {id:60, unit:5, q:"Price competition among sellers usually benefits:", choices:{A:"Sellers only", B:"Buyers (consumers)", C:"Only government", D:"No one"}, answer:"B", explanation:"Price competition can result in lower prices for consumers."}
+    ];
+
+    // timer and state
+    let started = false;
+    let startTime = null;
+    let timerInterval = null;
+    const totalQuestions = questions.length;
+
+    // generate HTML for questions
+    const form = document.getElementById('quizForm');
+    function renderQuestions(){
+      form.innerHTML = '';
+      questions.forEach((item, idx) => {
+        const qdiv = document.createElement('div');
+        qdiv.className = 'question';
+        qdiv.id = 'q-' + item.id;
+        qdiv.innerHTML = `
+          <div class="q-head">
+            <h4>Q${idx+1}. ${item.q}</h4>
+            <div class="small">Unit ${item.unit}</div>
+          </div>
+          <div class="options">
+            ${['A','B','C','D'].map(letter=>{
+              return `<label class="option"><input type="radio" name="q${item.id}" value="${letter}"><span class="letter">${letter}</span> <span>${item.choices[letter]}</span></label>`;
+            }).join('')}
+          </div>
+          <div class="result" id="res-${item.id}"></div>
+        `;
+        form.appendChild(qdiv);
+      });
+    }
+
+    renderQuestions();
+
+    // timer functions
+    function formatTime(seconds){
+      const mm = String(Math.floor(seconds/60)).padStart(2,'0');
+      const ss = String(seconds%60).padStart(2,'0');
+      return `${mm}:${ss}`;
+    }
+
+    function updateProgress(){
+      const answered = questions.filter(q=>{
+        const el = document.querySelector(`input[name="q${q.id}"]:checked`);
+        return el !== null;
+      }).length;
+      const percent = Math.round((answered/totalQuestions)*100);
+      document.getElementById('progress').style.width = percent + '%';
+    }
+
+    function startExam(){
+      if(started) return;
+      started = true;
+      startTime = Date.now();
+      document.getElementById('status').textContent = 'In progress';
+      document.getElementById('timeDisplay').textContent = '00:00';
+      timerInterval = setInterval(()=>{
+        const secs = Math.floor((Date.now() - startTime)/1000);
+        document.getElementById('timeDisplay').textContent = formatTime(secs);
+      },1000);
+    }
+
+    function resetExam(){
+      if(timerInterval) clearInterval(timerInterval);
+      started = false;
+      startTime = null;
+      document.getElementById('status').textContent = 'Not started';
+      document.getElementById('timeDisplay').textContent = '00:00';
+      document.getElementById('scoreDisplay').textContent = '—';
+      document.getElementById('correctDisplay').textContent = '—';
+      document.getElementById('report').style.display = 'none';
+      document.getElementById('reportContent').innerHTML = '';
+      document.getElementById('recommendations').innerHTML = '';
+      const inputs = form.querySelectorAll('input[type=radio]');
+      inputs.forEach(i=>i.checked = false);
+      document.querySelectorAll('.result').forEach(r=>{
+        r.style.display='none';
+        r.className='result';
+        r.innerHTML='';
+      });
+      document.getElementById('progress').style.width = '0%';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    // scoring and feedback
+    function gradeExam(){
+      if(!started){
+        // start timer if not started (user might have loaded and directly submit)
+        startExam();
+      }
+      // stop timer
+      if(timerInterval) clearInterval(timerInterval);
+      const totalTimeSecs = startTime ? Math.floor((Date.now()-startTime)/1000) : 0;
+      document.getElementById('timeDisplay').textContent = formatTime(totalTimeSecs);
+      document.getElementById('status').textContent = 'Finished';
+
+      let correctCount = 0;
+      const unitWrongCounts = {}; // unit -> wrong count
+      questions.forEach(q=>{
+        if(!unitWrongCounts[q.unit]) unitWrongCounts[q.unit] = 0;
+      });
+
+      questions.forEach(q=>{
+        const sel = document.querySelector(`input[name="q${q.id}"]:checked`);
+        const resDiv = document.getElementById('res-'+q.id);
+        if(sel && sel.value === q.answer){
+          correctCount++;
+          resDiv.className = 'result correct';
+          resDiv.style.display='block';
+          resDiv.innerHTML = `<strong>Correct.</strong> ${q.explanation}`;
+        } else {
+          resDiv.className = 'result wrong';
+          resDiv.style.display='block';
+          const userAns = sel ? sel.value : 'No answer';
+          resDiv.innerHTML = `<strong>Wrong.</strong> Your answer: ${userAns}. Correct: ${q.answer}. ${q.explanation}`;
+          unitWrongCounts[q.unit] += 1;
+        }
+      });
+
+      // show score and summary
+      const score = Math.round((correctCount / totalQuestions) * 100);
+      document.getElementById('scoreDisplay').textContent = score + '%';
+      document.getElementById('correctDisplay').textContent = `${correctCount} / ${totalQuestions}`;
+
+      // build report content
+      const reportEl = document.getElementById('reportContent');
+      const timeMin = Math.floor(totalTimeSecs/60);
+      reportEl.innerHTML = `
+        <p><strong>Score:</strong> ${score}%  &nbsp; | &nbsp; <strong>Correct:</strong> ${correctCount} / ${totalQuestions}</p>
+        <p><strong>Time used:</strong> ${formatTime(totalTimeSecs)} (mm:ss)</p>
+      `;
+
+      // recommend study areas
+      // threshold: if wrong count in unit > 30% of that unit's questions -> recommend
+      const unitSizes = {1:15,2:10,3:10,4:15,5:10};
+      const recommendations = [];
+      Object.keys(unitWrongCounts).forEach(unitKey=>{
+        const wrong = unitWrongCounts[unitKey];
+        const size = unitSizes[unitKey];
+        const percentWrong = Math.round((wrong/size)*100);
+        if(percentWrong >= 30){
+          recommendations.push({unit:unitKey, wrong, size, percentWrong});
+        }
+      });
+
+      let recHtml = '<h4>Recommendations</h4>';
+      if(recommendations.length === 0){
+        recHtml += `<p>Great job! No unit has more than 30% incorrect. Review any single wrong answers as needed.</p>`;
+      } else {
+        recHtml += `<p>You should review these units (high error rate):</p><ul>`;
+        recommendations.forEach(r=>{
+          let unitName = '';
+          if(r.unit==1) unitName='Unit 1 — Investment & Savings';
+          if(r.unit==2) unitName='Unit 2 — Production of Goods & Services';
+          if(r.unit==3) unitName='Unit 3 — Sufficiency Economy';
+          if(r.unit==4) unitName='Unit 4 — Consumer Protection Laws';
+          if(r.unit==5) unitName='Unit 5 — Economic Systems';
+          recHtml += `<li><strong>${unitName}</strong> : ${r.wrong} / ${r.size} wrong (${r.percentWrong}%)</li>`;
+        });
+        recHtml += `</ul>`;
+        recHtml += `<p class="small">Suggestion: Spend extra study time on the above units. For each flagged unit, plan 30–60 minutes of focused review: read summaries, do 10–15 practice questions, and review explanations.</p>`;
+      }
+
+      // general study time advice
+      let timeAdvice = '';
+      if(score >= 85){
+        timeAdvice = 'You performed well. Do light review (30–60 minutes) on any missed questions.';
+      } else if(score >= 65){
+        timeAdvice = 'Decent performance. Spend 2–3 hours reviewing weak topics and re-do practice questions.';
+      } else {
+        timeAdvice = 'Lower score. Spend 4–6 hours total: review summaries of all units, focus on recommended units, and practice more quizzes.';
+      }
+      recHtml += `<div style="margin-top:10px"><strong>Study time suggestion:</strong> ${timeAdvice}</div>`;
+
+      document.getElementById('recommendations').innerHTML = recHtml;
+
+      document.getElementById('report').style.display = 'block';
+      // scroll to report
+      setTimeout(()=>document.getElementById('report').scrollIntoView({behavior:'smooth'}),200);
+    }
+
+    // show correct answers (no grading)
+    function showCorrectAnswers(){
+      questions.forEach(q=>{
+        const resDiv = document.getElementById('res-'+q.id);
+        resDiv.style.display = 'block';
+        resDiv.className = 'result correct';
+        resDiv.innerHTML = `<strong>Answer: ${q.answer}.</strong> ${q.explanation}`;
+      });
+    }
+
+    // event listeners
+    document.getElementById('startBtn').addEventListener('click', ()=>{
+      startExam();
+      document.getElementById('status').textContent = 'In progress';
+    });
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      if(confirm('Reset the exam? All answers will be cleared.')) resetExam();
+    });
+    document.getElementById('submitBtn').addEventListener('click', (e)=>{
+      e.preventDefault();
+      if(confirm('Submit all answers and finish exam?')) gradeExam();
+    });
+    document.getElementById('submitBottom').addEventListener('click', (e)=>{
+      e.preventDefault();
+      if(confirm('Submit all answers and finish exam?')) gradeExam();
+    });
+    document.getElementById('showAnswers').addEventListener('click',(e)=>{
+      e.preventDefault();
+      if(confirm('Show correct answers for all questions?')) showCorrectAnswers();
+    });
+
+    // update progress on any selection
+    form.addEventListener('change', (e)=>{
+      updateProgress();
+    });
+
+    // initial small guidance
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // show short instruction block at top
+      const info = document.createElement('div');
+      info.className = 'recommend';
+      info.style.marginBottom='12px';
+      info.innerHTML = `<strong>Instructions:</strong> Click "Start Exam" to begin timer. Answer all 60 questions (A-D). Click "Submit Answers" when finished. After submitting you'll see score, time used, which units to revise, and explanations for each wrong answer.`;
+      const main = document.getElementById('mainContent');
+      main.insertBefore(info, form);
+    });
+
+  </script>
+</body>
+</html>
